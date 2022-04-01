@@ -11,7 +11,7 @@ module.exports = {
     mode: "development",
     devServer: {
         open: true,
-        port: 8080,
+        port: 4534,
 
     },
     resolve: {
@@ -22,11 +22,25 @@ module.exports = {
         rules: [
             {
                 test: /\.(js)|(jsx)$/,
-                use: "babel-loader"
+                use: "babel-loader",
             },
             {
                 test: /\.(ts)|(tsx)$/,
                 use: "ts-loader"
+            },
+            {
+                test: /\.(css)|(less)$/,
+                use: ["style-loader", "css-loader", 'postcss-loader', "less-loader"],
+                exclude: /\.module\.scss$/,
+            },
+            {
+            test: /\.module\.less$/,
+            use: [
+                'style-loader',
+                'css-loader',
+                'postcss-loader',
+                'less-loader',
+            ],
             }
         ]
     },
