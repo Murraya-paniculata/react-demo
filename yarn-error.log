@@ -1,0 +1,79 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/shengshaoxing/opt/anaconda3/bin:/Users/shengshaoxing/opt/anaconda3/condabin:/Users/shengshaoxing/.cargo/bin
+
+Yarn version: 
+  1.22.15
+
+Node version: 
+  14.17.6
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@types%2fnode: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141512:19)
+      at Object.onceWrapper (events.js:519:28)
+      at ClientRequest.emit (events.js:400:28)
+      at TLSSocket.emitRequestTimeout (_http_client.js:790:9)
+      at Object.onceWrapper (events.js:519:28)
+      at TLSSocket.emit (events.js:412:35)
+      at TLSSocket.Socket._onTimeout (net.js:484:8)
+      at listOnTimeout (internal/timers.js:557:17)
+      at processTimers (internal/timers.js:500:7)
+
+npm manifest: 
+  {
+    "name": "react-demo",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "git@github.com:Murraya-paniculata/react-demo.git",
+    "author": "Murraya-paniculata <1395039366@qq.com>",
+    "license": "MIT",
+    "scripts": {
+      "build:dev": "webpack",
+      "start": "webpack-dev-server"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.10.2",
+      "@babel/preset-react": "^7.10.1",
+      "@babel/preset-typescript": "^7.16.7",
+      "@types/node": "^17.0.23",
+      "@types/react": "^17.0.43",
+      "@types/react-dom": "^17.0.14",
+      "autoprefixer": "^10.4.4",
+      "babel-loader": "^8.1.0",
+      "clean-webpack-plugin": "^4.0.0",
+      "core.js": "^0.4.2",
+      "css-loader": "^6.7.1",
+      "html-webpack-plugin": "^5.5.0",
+      "less": "^4.1.2",
+      "less-loader": "^10.2.0",
+      "postcss-loader": "^6.2.1",
+      "postcss-normalize": "^10.0.1",
+      "postcss-preset-env": "^7.4.3",
+      "style-loader": "^3.3.1",
+      "ts-loader": "^9.2.8",
+      "webpack": "^5.70.0",
+      "webpack-bundle-analyzer": "^4.5.0",
+      "webpack-cli": "^4.9.2",
+      "webpack-dev-server": "^4.7.4"
+    },
+    "dependencies": {
+      "@babel/runtime-corejs2": "^7.17.8",
+      "antd": "^4.19.3",
+      "core-js": "^3.21.1",
+      "react": "^18.0.0",
+      "react-dom": "^18.0.0",
+      "react-router": "^6.2.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

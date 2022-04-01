@@ -1,0 +1,7 @@
+{
+    "presets": [
+        ["@babel/preset-env"], // useBuiltIns 如果书写新的js语法，babel增加一些新的构造方法
+        "@babel/preset-react",
+        "@babel/preset-typescript" // 没有考虑低版本浏览器的js语法兼容性
+    ]
+}

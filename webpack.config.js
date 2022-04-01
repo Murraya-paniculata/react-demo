@@ -1,6 +1,8 @@
-var path = require("path");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
-var { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+
 
 module.exports = {
     entry: "./src/index.tsx",
@@ -8,6 +10,7 @@ module.exports = {
         path: path.resolve(__dirname, './dist'),
         filename: 'main.js'
     },
+    target: 'web',
     mode: "development",
     devServer: {
         open: true,
@@ -19,14 +22,12 @@ module.exports = {
     },
     devtool: "source-map",
     module: {
+        noParse: /antd/,
         rules: [
             {
-                test: /\.(js)|(jsx)$/,
-                use: "babel-loader",
-            },
-            {
-                test: /\.(ts)|(tsx)$/,
-                use: "ts-loader"
+                test: /\.(js)|(jsx)|(ts)|(tsx)$/,
+                exclude: /node_modules/,
+                use: ["babel-loader", "ts-loader"]
             },
             {
                 test: /\.(css)|(less)$/,
@@ -34,7 +35,7 @@ module.exports = {
                 exclude: /\.module\.scss$/,
             },
             {
-            test: /\.module\.less$/,
+            test: /\.(css)|(less)$/,
             use: [
                 'style-loader',
                 'css-loader',
@@ -45,8 +46,12 @@ module.exports = {
         ]
     },
     plugins: [
+        // new BundleAnalyzerPlugin({
+        //     analyzerPort: 8919
+        // }),
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, "./public/index.html")
+            template: path.resolve(__dirname, "./public/index.html"),
+            title: "a react demo"
         }),
         new CleanWebpackPlugin()
     ]
