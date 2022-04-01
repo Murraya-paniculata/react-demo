@@ -1,58 +1,77 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // 清除 dist 目录
+const CopyPlugin = require("copy-webpack-plugin"); // 处理静态资源
+const HtmlWebpackPlugin = require("html-webpack-plugin"); // 处理模板页面
+const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // 打包css文件
 
-
+// webpack的基本配置
 module.exports = {
-    entry: "./src/index.tsx",
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        filename: 'main.js'
+  entry: "./src/index.tsx", // 获取入口配置
+  output: {
+    filename: "js/[name].[chunkhash:5].js", // js 输出到 dist/js/xxx
+    publicPath: "/", // 公用的公共路径 /
+    path: path.resolve(__dirname, "dist"), // 输出目录为 dist
+  },
+  resolve: {
+    extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
+    alias: {
+      "@": path.resolve(__dirname, "src"), // 别名 @ = src目录
+      _: __dirname, // 别名 _ = 工程根目录
     },
-    target: 'web',
-    mode: "development",
-    devServer: {
-        open: true,
-        port: 4534,
-
-    },
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx']
-    },
-    devtool: "source-map",
-    module: {
-        noParse: /antd/,
-        rules: [
-            {
-                test: /\.(js)|(jsx)|(ts)|(tsx)$/,
-                exclude: /node_modules/,
-                use: ["babel-loader", "ts-loader"]
+  },
+  stats: {
+    colors: true, // 打包时使用不同的颜色区分信息
+    modules: false, // 打包时不显示具体模块信息
+    entrypoints: false, // 打包时不显示入口模块信息
+    children: false, // 打包时不显示子模块信息
+  },
+  module: {
+    rules: [
+      {
+        // 各种图片、字体文件，均交给 url-loader 处理
+        test: /\.(png)|(gif)|(jpg)|(svg)|(bmp)|(eot)|(woff)|(ttf)$/i,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 1024,
+              name: "static/[name].[hash:5].[ext]",
+              esModule: false,
             },
-            {
-                test: /\.(css)|(less)$/,
-                use: ["style-loader", "css-loader", 'postcss-loader', "less-loader"],
-                exclude: /\.module\.scss$/,
-            },
-            {
-            test: /\.(css)|(less)$/,
-            use: [
-                'style-loader',
-                'css-loader',
-                'postcss-loader',
-                'less-loader',
-            ],
-            }
-        ]
-    },
-    plugins: [
-        // new BundleAnalyzerPlugin({
-        //     analyzerPort: 8919
-        // }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, "./public/index.html"),
-            title: "a react demo"
-        }),
-        new CleanWebpackPlugin()
-    ]
-}
+          },
+        ],
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      { test: /\.(js)|(jsx)$/, exclude: /node_modules/, use: "babel-loader" },
+      { test: /\.(ts)|(tsx)$/, exclude: /node_modules/, use: "ts-loader" },
+      {
+        test: /\.less$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"]
+      }
+    ],
+  },
+  plugins: [
+    new CleanWebpackPlugin(), // 应用 清除输出目录 插件
+    new CopyPlugin({
+      // 应用 复制文件 插件
+      patterns: [
+        {
+          from: path.resolve(__dirname, "public"), // 将public目录中的所有文件
+          to: "./", // 复制到 输出目录 的根目录
+        },
+      ],
+    }),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+      filename: "index.html",
+    }),
+    new MiniCssExtractPlugin({
+      // 打包 css 代码 到文件中
+      filename: "css/[name].css",
+      chunkFilename: "css/common.[hash:5].css", // 针对公共样式的文件名
+    }),
+  ],
+};
