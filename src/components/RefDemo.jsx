@@ -23,7 +23,7 @@ export default class RefDemo extends Component {
         this.aRef = {
             current: null
         }
-        // this.aRef = React.createRef();
+        // this.aRef = React.createRef(); // 和上面的对象是等价的
     }
 
     handleClick = () => {
@@ -35,13 +35,23 @@ export default class RefDemo extends Component {
         this.aRef.current.methed();
     }
 
+    getRef = (el) => {
+        console.log("方法被调用了")
+        this.aRef = el;
+        console.log(22, this.aRef);
+    }
+
+    componentDidMount() {
+        console.log(11);
+    }
+
   render() {
     return (
       <div>
         <input type="text" ref="text" />
         <A ref={this.aRef} />
+        <A ref={this.getRef}/>
         <button onClick={this.handleClick}>聚焦</button>
-        <button onClick={this.callMethod}>方法调用</button>
       </div>
     )
   }
