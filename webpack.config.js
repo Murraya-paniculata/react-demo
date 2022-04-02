@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // 打包css文
 
 // webpack的基本配置
 module.exports = {
-  entry: "./src/index.tsx", // 获取入口配置
+  entry: "./src/index.jsx", // 获取入口配置
   output: {
     filename: "js/[name].[chunkhash:5].js", // js 输出到 dist/js/xxx
     publicPath: "/", // 公用的公共路径 /
