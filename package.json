@@ -38,6 +38,7 @@
   "dependencies": {
     "antd": "^4.19.3",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "redux": "^4.1.2"
   }
 }
